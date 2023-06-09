@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container">
+    <h2>Welcome, {{ current_user.username }}!</h2>
+    <h3>Your Power Usage</h3>
+    <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <script>
+      window.onload = function () {
+        var chart = new CanvasJS.Chart("chartContainer", {
+          title: {
+            text: "Power Usage"
+          },
+          axisY: {
+            title: "Power in Watts"
+          },
+          data: [{
+            type: "line",
+            dataPoints:{{ data_points|tojson }},
+          }]
+        });
+        chart.render();
+      }
+    </script>
+  </div>
+{% endblock %}
